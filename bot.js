@@ -12,7 +12,7 @@ let flag = { flag: false };
 
 
 // Ensure targetHour is within the valid range of 1 to 24.
-let targetHour = 2 // only for automatically 
+let targetHour = 7 // only for automatically 
 
 
 
@@ -21,6 +21,7 @@ targetHour == 24 ? targetHour = 0 : targetHour
 
 // To run in the background automatically without manual execution, use "pm2 start bot.js". "autoRun" Must be set to true.
 // To run manually, execute "npm start". "autoRun" Must be set to false.
+
 const autoRun = true //auto = true ----- manually = false
 
 
@@ -31,7 +32,7 @@ const checkConditions = (hour, targetHour, flag, min) => {
     }
 
     if (hour != targetHour) {
-        console.log(`Current hour is ${hour}:${min}. The bot only runs at 23:00. Exiting.`);
+        console.log(`Current hour is ${hour}:${min}. The bot only runs at   ${targetHour}. Exiting.`);
         return false
     }
 
@@ -57,10 +58,11 @@ async function bot() {
 
     const email = process.env.email     //  change process.env.email to "your email"
     const password = process.env.password   //  change process.env.password to "your password"
-
-    const browser = await puppeteer.launch({ headless: false })
+    let browser
 
     try {
+        // Modify the headless option if you want to view the bot's actions. Set it to false to see the browser window while the bot operates
+        browser = await puppeteer.launch({ headless: true })
 
         console.log('!!!!!!!!!!-launched-!!!!!!!!!!')
 
@@ -127,8 +129,7 @@ async function bot() {
     finally {
         await browser.close()
     }
-
 };
 
-
-autoRun ? setInterval(bot, 3000) : bot();
+//Set interval to run bot every 10 minutes
+setInterval(bot, 600000);
