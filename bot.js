@@ -12,7 +12,7 @@ let flag = { flag: false };
 
 
 // Ensure targetHour is within the valid range of 1 to 24.
-let targetHour = 7 // only for automatically 
+let targetHour = 18 // only for automatically 
 
 
 
@@ -119,6 +119,7 @@ async function bot() {
         }
 
         console.log('All items processed successfully!');
+        console.log(targetHour)
 
     } catch (error) {
         console.error(error)
@@ -132,4 +133,4 @@ async function bot() {
 };
 
 //Set interval to run bot every 10 minutes
-setInterval(bot, 600000);
+autoRun ? setInterval(bot, 600000) : bot()
